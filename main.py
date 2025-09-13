@@ -1,5 +1,6 @@
 import pygame
 from constants import *
+from player import Player
 
 def main():
     pygame.init()
@@ -7,12 +8,20 @@ def main():
     clock = pygame.time.Clock()
     dt = 0
 
+    x = SCREEN_WIDTH / 2
+    y = SCREEN_HEIGHT / 2
+
+    player = Player(x, y)
+
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return
 
         pygame.Surface.fill(window, "black")
+
+        player.draw(window)
+
         pygame.display.flip()
         dt = clock.tick(60) / 1000 # convert from milliseconds to seconds
 
