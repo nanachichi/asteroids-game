@@ -33,15 +33,20 @@ class Player(CircleShape):
         if keys[pygame.K_d]:
             self.rotate(dt)
         if keys[pygame.K_w]:
-            self.move(dt)
+            shift_pressed = pygame.key.get_mods() & pygame.KMOD_SHIFT
+            self.move(dt, shift_pressed)
         if keys[pygame.K_s]:
-            self.move(-abs(dt))
+            shift_pressed = pygame.key.get_mods() & pygame.KMOD_SHIFT
+            self.move(-abs(dt), shift_pressed)
         if keys[pygame.K_SPACE]:
             self.shoot()
     
-    def move(self, dt):
+    def move(self, dt, shift_pressed):
         forward = pygame.Vector2(0, 1).rotate(self.rotation)
+        if shift_pressed:
+            self.position += forward * PLAYER_SPEED * PLAYER_SPEED_ACCELERATION * dt
         self.position += forward * PLAYER_SPEED * dt
+
 
     def shoot(self):
         if self.shoot_timer > 0:
